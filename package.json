@@ -1,6 +1,6 @@
 {
   "name": "@casperengl/try-catch",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/try-catch.js",
   "license": "MIT",
   "devDependencies": {
@@ -19,7 +19,6 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "prepublish": "npm run build",
     "publish": "npm publish --access public"
   },
   "description": "Package to trycatch code that accepts functions and promises",
