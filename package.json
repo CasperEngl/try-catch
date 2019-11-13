@@ -18,8 +18,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc",
-    "publish": "npm publish --access public"
+    "build": "tsc"
   },
   "description": "Package to trycatch code that accepts functions and promises",
   "directories": {
