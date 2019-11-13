@@ -17,7 +17,10 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "publish": "npm publish --access public"
   },
   "description": "Package to trycatch code that accepts functions and promises",
   "directories": {
