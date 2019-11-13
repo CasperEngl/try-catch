@@ -1,0 +1,22 @@
+{
+  "name": "try-catch",
+  "version": "1.0.0",
+  "main": "lib/try-catch.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/parser": "^7.7.3",
+    "@babel/types": "^7.7.2",
+    "@types/jest": "^24.0.23",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
