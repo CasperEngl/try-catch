@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export function tryCatch(
+export async function tryCatch(
   subject: Function | Promise<any>,
   errorExt?: object,
-): any[] | Promise<any[]> {
+): Promise<any[]> {
   if (typeof subject === 'function') {
     try {
       return Promise.resolve([null, subject()]);
@@ -16,7 +16,7 @@ export function tryCatch(
     .then((data) => [null, data])
     .catch((err) => {
       if (errorExt) {
-        (Object as any).assign(err, errorExt);
+        Object.assign(err, errorExt);
       }
 
       return [err, undefined];
