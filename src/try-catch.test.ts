@@ -1,57 +1,125 @@
 /* eslint-disable no-undef */
 import { tryCatch } from './try-catch';
 
-test('will accept a function and return the value', async () => {
-  const fn = (): string => 'success';
+describe('Function', () => {
+  test('return the value', async () => {
+    const fn = (): string => 'success';
 
-  expect(await tryCatch(fn)).toStrictEqual([
-    null,
-    'success',
-  ]);
-});
+    const [error, result] = await tryCatch(fn);
 
-test('will accept a function and error on throw', async () => {
-  const fn = (): string => {
-    if (true) { // eslint-disable-line
-      throw new Error('An error occurred');
-    }
+    expect(error).toBeNull();
+    expect(result).toEqual('success');
+  });
 
-    return 'success';
-  };
-
-  expect(await tryCatch(fn)).toStrictEqual([
-    new Error('An error occurred'),
-    undefined,
-  ]);
-});
-
-test('will accept a promise and return the value', async () => {
-  const promise = new Promise((resolve) => resolve('success'));
-
-  expect(await tryCatch(promise)).toStrictEqual([
-    null,
-    'success',
-  ]);
-});
-
-test('will accept a promise that resolves to an object', async () => {
-  const promise = new Promise((resolve) => resolve({
-    status: 'success',
-  }));
-
-  expect(await tryCatch(promise)).toStrictEqual([
-    null,
-    {
+  test('resolves to an object', async () => {
+    const fn = (): { status: string } => ({
       status: 'success',
-    },
-  ]);
+    });
+
+    const [error, result] = await tryCatch(fn);
+
+    expect(error).toBeNull();
+    expect(result).toEqual({
+      status: 'success',
+    });
+  });
+
+  test('throw error', async () => {
+    const fn = (): string => {
+      if (true) { // eslint-disable-line
+        throw new Error('An error occurred');
+      }
+
+      return 'success';
+    };
+
+    const [error, result] = await tryCatch(fn);
+
+    expect(fn).toThrowError();
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('An error occurred');
+    expect(result).toBeUndefined();
+  });
+
+  test('with an error extension', async () => {
+    const fn = (): string => {
+      if (true) { // eslint-disable-line
+        throw new Error('An error occurred');
+      }
+
+      return 'success';
+    };
+
+    const [error, result] = await tryCatch(fn, {
+      foo: 'bar',
+    });
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('An error occurred');
+    expect(error).toEqual(expect.objectContaining({ foo: 'bar' }));
+    expect(result).toBeUndefined();
+  });
 });
 
-test('will accept a promise and error on reject', async () => {
-  const promise = new Promise((_, reject) => reject(new Error('An error occurred')));
+describe('Promise', () => {
+  test('return the value', async () => {
+    const promise = new Promise((resolve) => resolve('success'));
 
-  expect(await tryCatch(promise)).toStrictEqual([
-    new Error('An error occurred'),
-    undefined,
-  ]);
+    const [error, result] = await tryCatch(promise);
+
+    expect(error).toBeNull();
+    expect(result).toEqual('success');
+  });
+
+  test('resolves to an object', async () => {
+    const promise = new Promise((resolve) => resolve({
+      status: 'success',
+    }));
+
+    const [error, result] = await tryCatch(promise);
+
+    expect(error).toBeNull();
+    expect(result).toEqual({
+      status: 'success',
+    });
+  });
+
+  test('throw error', async () => {
+    const promise = new Promise((resolve) => {
+      if (true) { // eslint-disable-line
+        throw new Error('An error was thrown');
+      }
+
+      resolve('success');
+    });
+
+    const [error, result] = await tryCatch(promise);
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('An error was thrown');
+    expect(result).toBeUndefined();
+  });
+
+  test('error on reject', async () => {
+    const promise = Promise.reject(new Error('An error occurred'));
+
+    const [error, result] = await tryCatch(promise);
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('An error occurred');
+    expect(result).toBeUndefined();
+  });
+
+  test('with an error extension', async () => {
+    const promise = Promise.reject(new Error('An error occurred'));
+
+    const [error, result] = await tryCatch(promise, {
+      foo: 'bar',
+    });
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toEqual('An error occurred');
+    expect(error).toEqual(expect.objectContaining({ foo: 'bar' }));
+    expect(result).toBeUndefined();
+  });
 });
