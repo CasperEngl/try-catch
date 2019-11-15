@@ -6,21 +6,15 @@ export async function tryCatch(
 ): Promise<any[]> {
   if (typeof subject === 'function') {
     try {
-      return Promise.resolve([null, subject()]);
+      return [null, subject()];
     } catch (err) {
-      return [err, undefined];
+      return [Object.assign(err, errorExt), undefined];
     }
   }
 
   return subject
     .then((data) => [null, data])
-    .catch((err) => {
-      if (errorExt) {
-        Object.assign(err, errorExt);
-      }
-
-      return [err, undefined];
-    });
+    .catch((err) => [Object.assign(err, errorExt), undefined]);
 }
 
 export default tryCatch;
