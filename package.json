@@ -18,6 +18,7 @@
   },
   "scripts": {
     "test": "jest",
+    "watch:test": "jest --watch",
     "build": "tsc"
   },
   "description": "Package to trycatch code that accepts functions and promises",
