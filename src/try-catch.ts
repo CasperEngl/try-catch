@@ -10,11 +10,13 @@ export async function tryCatch(
     } catch (err) {
       return [Object.assign(err, errorExt), undefined];
     }
+  } else if (Promise.resolve(subject) === subject) {
+    return subject
+      .then((data) => [null, data])
+      .catch((err) => [Object.assign(err, errorExt), undefined]);
   }
 
-  return subject
-    .then((data) => [null, data])
-    .catch((err) => [Object.assign(err, errorExt), undefined]);
+  return [new TypeError(`'${subject ? subject.toString() : subject}' is not a function or promise`), undefined];
 }
 
 export default tryCatch;
