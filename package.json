@@ -19,7 +19,9 @@
   "scripts": {
     "test": "jest",
     "watch:test": "jest --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "prepublishOnly": "npm test"
   },
   "description": "Package to trycatch code that accepts functions and promises",
   "directories": {
