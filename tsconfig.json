@@ -1,4 +1,5 @@
 {
+  "exclude" : ["src/**/*.test.ts", "lib/**/*"],
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
@@ -62,6 +63,5 @@
 
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
-  },
-  "exclude" : ["src/**/*.test.ts"],
+  }
 }
