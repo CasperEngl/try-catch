@@ -39,6 +39,9 @@ yarn add @casperengl/try-catch
 
 ```js
 import { tryCatch } from '@casperengl/try-catch';
+
+// Or default import
+import tryCatch from '@casperengl/try-catch';
 ```
 
 ### CommonJS
