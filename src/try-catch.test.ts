@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable no-constant-condition */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
