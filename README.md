@@ -93,6 +93,21 @@ const { tryCatch } = require('@casperengl/try-catch');
 })();
 ```
 
+#### Axios
+
+Or the likes of Axios
+
+```js
+(async () => {
+  // Do not unwrap the response with `await`
+  const promise = axios.get('https://reqres.in/api/users/1');
+
+  const [error, result] = await tryCatch(promise);
+
+  console.log([error, result]) // [null, { ..., data: { data: { first_name: 'George', last_name: 'Bluth' } } }]
+})();
+```
+
 ## Run tests
 
 ```sh
