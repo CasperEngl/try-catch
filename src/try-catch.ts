@@ -1,19 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export async function tryCatch(
-  subject: Function | Promise<any>,
-  errorExt?: object,
-): Promise<any[]> {
+export async function tryCatch <T>(
+  subject: Function | Promise<T>,
+  ...args: any
+): Promise<[Error, undefined] | (T | null)[]> {
   if (typeof subject === 'function') {
+    const fn = (subject as typeof subject);
+
     try {
-      return [null, subject()];
-    } catch (err) {
-      return [Object.assign(err, errorExt), undefined];
+      return Promise.resolve(fn(...args))
+        .then((data) => [null, data])
+        .catch((error) => [error, undefined]);
+    } catch (error) {
+      return Promise.resolve([error, undefined]);
     }
-  } else if (Promise.resolve(subject) === subject) {
+  }
+
+  if (Promise.resolve(subject) === subject) {
     return subject
       .then((data) => [null, data])
-      .catch((err) => [Object.assign(err, errorExt), undefined]);
+      .catch((error) => [error, undefined]);
   }
 
   return [new TypeError(`'${subject ? subject.toString() : subject}' is not a function or promise`), undefined];
