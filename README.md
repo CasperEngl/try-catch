@@ -3,8 +3,8 @@
   <a href="https://www.npmjs.com/package/@casperengl/try-catch" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/@casperengl/try-catch.svg">
   </a>
-  <a href="https://www.npmjs.com/package/@casperengl/try-catch" target="_blank">
-    <img alt="Travis CI" src="https://travis-ci.org/CasperEngl/try-catch.svg?branch=master">
+  <a href="https://github.com/casperengl/try-catch/actions" target="_blank">
+    <img alt="GitHub Action" src="https://github.com/casperengl/try-catch/workflows/Main/badge.svg">
   </a>
   <a href="https://github.com/CasperEngl/try-catch#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -13,7 +13,7 @@
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/CasperEngl/try-catch/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/CasperEngl/@casperengl/try-catch" />
+    <img alt="License: MIT" src="https://img.shields.io/github/license/casperengl/try-catch" />
   </a>
   <a href="https://twitter.com/casperengl" target="_blank">
     <img alt="Twitter: casperengl" src="https://img.shields.io/twitter/follow/casperengl.svg?style=social" />
