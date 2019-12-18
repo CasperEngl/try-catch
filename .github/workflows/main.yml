@@ -26,6 +26,6 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-      - name: Run tests with Knapsack Pro
+      - name: Run tests with Jest
         run: |
           $(npm bin)/jest
