@@ -10,7 +10,7 @@ const config = {
   output: {
     name: 'tryCatch',
     file: './lib/try-catch.js',
-    format: 'umd',
+    format: 'es2015',
     exports: 'named',
   },
 };
