@@ -1,6 +1,6 @@
 {
   "name": "@casperengl/try-catch",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "main": "lib/try-catch.js",
   "license": "MIT",
   "devDependencies": {
