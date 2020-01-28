@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-import { tryCatch } from './try-catch';
+import { tryCatch } from '../lib/try-catch';
 
 describe('Function', () => {
   it('should return the value', async () => {

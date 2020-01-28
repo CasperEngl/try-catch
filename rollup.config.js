@@ -1,18 +1,17 @@
-import typescript from 'rollup-plugin-typescript2';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
+import typescript from '@rollup/plugin-typescript';
 
-const config = {
+export default {
   input: './src/try-catch.ts',
+  output: {
+    dir: './lib',
+    format: 'cjs',
+    name: 'tryCatch',
+    exports: 'named',
+    sourcemap: true,
+  },
   plugins: [
     typescript(),
-    uglify(),
+    terser(),
   ],
-  output: {
-    name: 'tryCatch',
-    file: './lib/try-catch.js',
-    format: 'umd',
-    exports: 'named',
-  },
 };
-
-export default config;
