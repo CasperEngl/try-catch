@@ -3,26 +3,26 @@
 export async function tryCatch <T>(
   subject: Function | Promise<T>,
   ...args: any
-): Promise<[Error, undefined] | (T | null)[]> {
+): Promise<[Error, undefined] | [null, T]> {
   if (typeof subject === 'function') {
-    const fn = (subject as typeof subject);
+    const fn = (subject as typeof subject)
 
     try {
-      return Promise.resolve(fn(...args))
-        .then((data) => [null, data])
-        .catch((error) => [error, undefined]);
+      return [null, await fn(...args)]
     } catch (error) {
-      return Promise.resolve([error, undefined]);
+      return [error, undefined]
     }
   }
 
   if (Promise.resolve(subject) === subject) {
-    return subject
-      .then((data) => [null, data])
-      .catch((error) => [error, undefined]);
+    try {
+      return [null, await subject]
+    } catch (error) {
+      return [error, undefined]
+    }
   }
 
-  return [new TypeError(`'${subject ? subject.toString() : subject}' is not a function or promise`), undefined];
+  return [new TypeError(`'${subject ? subject.toString() : subject}' is not a function or promise`), undefined]
 }
 
-export default tryCatch;
+export default tryCatch
