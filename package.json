@@ -3,6 +3,10 @@
   "version": "1.5.1",
   "main": "lib/try-catch.js",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^3.0.0",
     "@types/jest": "^24.0.23",
