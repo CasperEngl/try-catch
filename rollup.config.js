@@ -1,5 +1,5 @@
-import { terser } from 'rollup-plugin-terser'
 import typescript from '@rollup/plugin-typescript'
+import { terser } from 'rollup-plugin-terser'
 
 export default {
   input: './src/try-catch.ts',
@@ -10,6 +10,7 @@ export default {
     exports: 'named',
     sourcemap: true,
   },
+  external: ['tslib'],
   plugins: [
     typescript(),
     terser(),
