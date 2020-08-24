@@ -1,13 +1,17 @@
 {
   "name": "@casperengl/try-catch",
   "version": "1.6.3",
-  "main": "lib/try-catch.js",
+  "main": "lib/try-catch.cjs.js",
+  "browser": "lib/try-catch.umd.js",
+  "module": "lib/try-catch.es.js",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^3.0.0",
     "@types/jest": "^24.0.23",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
