@@ -24,3 +24,5 @@ export async function tryCatch <T>(
 
   return [new TypeError(`'${subject ? subject.toString() : subject}' is not a function or promise`), undefined]
 }
+
+export default tryCatch
