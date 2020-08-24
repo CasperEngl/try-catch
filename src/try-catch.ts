@@ -2,7 +2,7 @@
 
 export async function tryCatch <T>(
   subject: Function | Promise<T>,
-  ...args: any
+  ...args: any[]
 ): Promise<[Error, undefined] | [null, T]> {
   if (typeof subject === 'function') {
     const fn = (subject as typeof subject)
