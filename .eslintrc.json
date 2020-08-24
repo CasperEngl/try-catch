@@ -23,8 +23,7 @@
     "rules": {
         "import/prefer-default-export": 0,
         "@typescript-eslint/no-explicit-any": 0,
-        "semi": [2, "never"],
-        "import/extensions": 0
+        "semi": [2, "never"]
     },
     "settings": {
         "import/resolver": {
