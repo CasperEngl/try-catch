@@ -30,7 +30,7 @@
     "pretest": "npm run build",
     "test": "jest",
     "watch:test": "npm run test --watch",
-    "build": "rollup -c rollup.config.js",
+    "build": "tsc && rollup -c rollup.config.js",
     "prepublishOnly": "npm test"
   },
   "description": "Package to trycatch code that accepts functions and promises",
