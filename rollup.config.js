@@ -4,8 +4,9 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 
 export default {
-  input: './src/try-catch.ts',
+  input: './src/index.ts',
   output: {
+    exports: 'named',
     name: 'tryCatch',
     dir: './lib',
     format: 'umd',

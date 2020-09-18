@@ -1,16 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+export interface TryCatchError extends Error {
+  [key: string]: any;
+}
+
+export class TryCatchError extends Error implements TryCatchError {
+  constructor(error: Error) { // esline-disable-error
+    super(error.name)
+
+    this.name = error.name
+    this.message = error.message
+    this.stack = error.stack
+  }
+}
+
 export async function tryCatch <T>(
   subject: Function | Promise<T>,
   ...args: any[]
-): Promise<[Error, undefined] | [null, T]> {
+): Promise<[TryCatchError, undefined] | [null, T]> {
   if (typeof subject === 'function') {
     const fn = (subject as typeof subject)
 
     try {
       return [null, await fn(...args)]
     } catch (error) {
-      return [error, undefined]
+      return [new TryCatchError(error), undefined]
     }
   }
 
@@ -18,7 +32,7 @@ export async function tryCatch <T>(
     try {
       return [null, await subject]
     } catch (error) {
-      return [error, undefined]
+      return [new TryCatchError(error), undefined]
     }
   }
 

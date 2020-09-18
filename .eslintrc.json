@@ -2,7 +2,8 @@
     "parser": "@typescript-eslint/parser",
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "browser": true
     },
     "extends": [
         "airbnb-base",
@@ -11,7 +12,8 @@
     ],
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "globalThis": true
     },
     "parserOptions": {
         "ecmaVersion": 2018,
@@ -22,6 +24,7 @@
     ],
     "rules": {
         "import/prefer-default-export": 0,
+        "import/extensions": 0,
         "@typescript-eslint/no-explicit-any": 0,
         "semi": [2, "never"]
     },
