@@ -9,33 +9,57 @@
   </head>
   <body class="p-32 bg-gray-800 text-white space-y-8">
     <h1 class="text-5xl">Try Catch</h1>
-    <button
-      id="refetch"
-      class="px-6 py-3 bg-white text-black hover:bg-black hover:text-white transition duration-150 ease-in-out"
-    >
-      Refetch
-    </button>
+    <div class="space-y-2">
+      <p class="w-full text-base italic">
+        Using
+        <a href="https://www.npmjs.com/package/axios" target="_blank" class="text-blue-500 underline">axios</a> for
+        fetching.
+      </p>
+      <div class="flex flex-wrap space-x-2">
+        <button
+          id="refetch"
+          class="px-6 py-3 bg-white text-black hover:bg-black hover:text-white transition duration-150 ease-in-out"
+        >
+          Refetch
+        </button>
+        <button
+          id="refetch-error"
+          class="px-6 py-3 bg-white text-black hover:bg-black hover:text-white transition duration-150 ease-in-out"
+        >
+          Refetch Error
+        </button>
+      </div>
+    </div>
     <pre id="data">{ "status": "loading" }</pre>
     <script type="module">
       import { tryCatch } from 'https://cdn.skypack.dev/@casperengl/try-catch';
+      import axios from 'https://cdn.skypack.dev/axios';
 
-      const apiCall = async () => {
+      const apiCall = async (apiError = false) => {
         document.getElementById('data').innerText = `{ "status": "loading" }`;
 
-        const promise = fetch('https://reqres.in/api/users/1').then((response) => response.json());
+        const promise = axios.get(`https://reqres.in/api/ users/${apiError ? 23 : 1}`);
         const [error, result] = await tryCatch(promise);
 
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         console.log(error, result);
 
-        document.getElementById('data').innerText = JSON.stringify({ status: 'done', ...result.data }, null, 2);
+        if (error) {
+          document.getElementById('data').innerText = JSON.stringify(error, null, 2);
+        } else {
+          document.getElementById('data').innerText = JSON.stringify(result, null, 2);
+        }
       };
 
       apiCall();
 
       document.getElementById('refetch').addEventListener('click', () => {
         apiCall();
+      });
+
+      document.getElementById('refetch-error').addEventListener('click', () => {
+        apiCall(true);
       });
     </script>
   </body>
