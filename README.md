@@ -46,7 +46,7 @@ import tryCatch from '@casperengl/try-catch';
 
 ### Browser (ESM)
 
-Notice `type="module"` is required to use import statements.
+Notice `type="module"` is required to use import statements in the browser.
 
 ```html
 <script type="module">
