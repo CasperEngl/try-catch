@@ -33,7 +33,7 @@
   "scripts": {
     "test": "jest",
     "watch:test": "npm run test --watch",
-    "build": "rollup -c rollup.config.js",
+    "build": "rollup -c rollup.config.js && tsc -d --emitDeclarationOnly",
     "prepublishOnly": "npm test"
   },
   "description": "Package to trycatch code that accepts functions and promises",
