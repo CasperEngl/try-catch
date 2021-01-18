@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Try Catch</title>
+
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <body class="p-32 bg-gray-800 text-white space-y-8">
+    <h1 class="text-5xl">Try Catch</h1>
+    <button
+      id="refetch"
+      class="px-6 py-3 bg-white text-black hover:bg-black hover:text-white transition duration-150 ease-in-out"
+    >
+      Refetch
+    </button>
+    <pre id="data">{ "status": "loading" }</pre>
+    <script type="module">
+      import { tryCatch } from 'https://cdn.skypack.dev/@casperengl/try-catch';
+
+      const apiCall = async () => {
+        document.getElementById('data').innerText = `{ "status": "loading" }`;
+
+        const promise = fetch('https://reqres.in/api/users/1').then((response) => response.json());
+        const [error, result] = await tryCatch(promise);
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        console.log(error, result);
+
+        document.getElementById('data').innerText = JSON.stringify({ status: 'done', ...result.data }, null, 2);
+      };
+
+      apiCall();
+
+      document.getElementById('refetch').addEventListener('click', () => {
+        apiCall();
+      });
+    </script>
+  </body>
+</html>

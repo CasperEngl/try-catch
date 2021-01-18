@@ -35,7 +35,7 @@ yarn add @casperengl/try-catch
 
 ## Usage
 
-### ES2015+
+### Bundler (Webpack, Rollup, etc.)
 
 ```js
 import { tryCatch } from '@casperengl/try-catch';
@@ -44,24 +44,41 @@ import { tryCatch } from '@casperengl/try-catch';
 import tryCatch from '@casperengl/try-catch';
 ```
 
-### CommonJS
+### Browser (ESM)
 
-```js
-const { tryCatch } = require('@casperengl/try-catch');
+Notice `type="module"` is required to use import statements.
+
+```html
+<script type="module">
+  import { tryCatch } from 'https://cdn.skypack.dev/@casperengl/try-catch';
+  // Or default import
+  // import tryCatch from 'https://cdn.skypack.dev/@casperengl/try-catch';
+
+  const apiCall = async () => {
+    const promise = fetch('https://reqres.in/api/users/1').then((response) => response.json());
+    const [error, result] = await tryCatch(promise);
+
+    console.log(error, result); // null, {data: {…}, support: {…}}
+  };
+
+  apiCall();
+</script>
 ```
 
 #### Function
 
 ```js
-(async () => { // success
+(async () => {
+  // success
   const fn = () => 'success';
-  
+
   const [error, result] = await tryCatch(fn);
 
   console.log([error, result]); // [null, 'success']
 })();
 
-(async () => { // error
+(async () => {
+  // error
   const fn = () => {
     if (true) {
       throw new Error('An error occurred');
@@ -69,7 +86,7 @@ const { tryCatch } = require('@casperengl/try-catch');
 
     return 'success';
   };
-  
+
   const [error, result] = await tryCatch(fn);
 
   console.log([error, result]); // [[Error: An error occurred], undefined]
@@ -79,20 +96,22 @@ const { tryCatch } = require('@casperengl/try-catch');
 #### Promise
 
 ```js
-(async () => { // success
+(async () => {
+  // success
   const promise = () => Promise.resolve('success');
 
   const [error, result] = await tryCatch(promise);
 
-  console.log([error, result]) // [null, 'success']
+  console.log([error, result]); // [null, 'success']
 })();
 
-(async () => { // error
+(async () => {
+  // error
   const promise = () => Promise.reject('An error occurred');
 
   const [error, result] = await tryCatch(promise);
 
-  console.log([error, result]) // [[Error: An error occurred], undefined]
+  console.log([error, result]); // [[Error: An error occurred], undefined]
 })();
 ```
 
@@ -107,7 +126,7 @@ Or the likes of Axios
 
   const [error, result] = await tryCatch(promise);
 
-  console.log([error, result]) // [null, { ..., data: { data: { first_name: 'George', last_name: 'Bluth' } } }]
+  console.log([error, result]); // [null, { ..., data: { data: { first_name: 'George', last_name: 'Bluth' } } }]
 })();
 ```
 
@@ -121,9 +140,9 @@ npm run test
 
 👤 **Casper Engelmann <me@casperengelmann.com>**
 
-* Website: https://casperengelmann.com/
-* Twitter: [@casperengl](https://twitter.com/casperengl)
-* Github: [@CasperEngl](https://github.com/CasperEngl)
+- Website: https://casperengelmann.com/
+- Twitter: [@casperengl](https://twitter.com/casperengl)
+- Github: [@CasperEngl](https://github.com/CasperEngl)
 
 ## 🤝 Contributing
 
@@ -138,5 +157,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2019 [Casper Engelmann <me@casperengelmann.com>](https://github.com/CasperEngl).<br />
 This project is [MIT](https://github.com/CasperEngl/try-catch/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
