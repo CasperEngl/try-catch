@@ -24,6 +24,8 @@
 
 ### 🏠 [Homepage](https://github.com/CasperEngl/try-catch#readme)
 
+### 🔎 [Example (Inspect page for source)](https://refined-github-html-preview.kidonng.workers.dev/CasperEngl/try-catch/raw/master/example/index.html)
+
 ## Install
 
 ```sh
