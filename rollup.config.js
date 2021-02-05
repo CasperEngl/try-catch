@@ -40,22 +40,14 @@ export default {
     }),
     copy({
       targets: [
-        {
-          src: './lib/try-catch.d.ts',
-          dest: './lib',
-          rename: 'try-catch.es.d.ts',
-        },
-        {
-          src: './lib/try-catch.d.ts',
-          dest: './lib',
-          rename: 'try-catch.cjs.d.ts',
-        },
-        {
-          src: './lib/try-catch.d.ts',
-          dest: './lib',
-          rename: 'try-catch.umd.d.ts',
-        },
-      ],
+        'try-catch.es.d.ts',
+        'try-catch.cjs.d.ts',
+        'try-catch.umd.d.ts',
+      ].map((typeDef) => ({
+        src: './lib/try-catch.d.ts',
+        dest: './lib',
+        rename: typeDef,
+      })),
     }),
   ],
 };
