@@ -38,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "axios": "^0.21.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.18.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^7.2.0",
@@ -56,7 +57,8 @@
   "scripts": {
     "test": "jest",
     "watch:test": "npm run test --watch",
-    "build": "tsc -d --emitDeclarationOnly && rollup -c rollup.config.js",
+    "prebuild": "tsc -d --emitDeclarationOnly",
+    "build": "rollup -c rollup.config.js",
     "prepublishOnly": "npm test"
   },
   "description": "Package to trycatch code that accepts functions and promises",
