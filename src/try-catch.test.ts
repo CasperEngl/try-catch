@@ -10,7 +10,7 @@ import { ModelDefinition } from 'miragejs/-types';
 // eslint-disable-next-line import/no-unresolved
 import Schema from 'miragejs/orm/schema';
 
-import { tryCatch } from '../lib/try-catch';
+import { tryCatch } from '../lib/try-catch.es';
 
 type User = {
   id: number;
