@@ -54,38 +54,38 @@ beforeEach(() => {
         }),
       }));
     },
-    seeds(_server) {
-      (_server.schema as AppSchema).create('user', {
+    seeds({ schema }: { schema: AppSchema }) {
+      schema.create('user', {
         email: 'george.bluth@test.test',
         first_name: 'George',
         last_name: 'Bluth',
         avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
       });
-      (_server.schema as AppSchema).create('user', {
+      schema.create('user', {
         email: 'janet.weaver@test.test',
         first_name: 'Janet',
         last_name: 'Weaver',
         avatar: 'https://eu.ui-avatars.com/api/?name=Janet+Weaver',
       });
-      (_server.schema as AppSchema).create('user', {
+      schema.create('user', {
         email: 'emma.wong@test.test',
         first_name: 'Emma',
         last_name: 'Wong',
         avatar: 'https://eu.ui-avatars.com/api/?name=Emma+Wong',
       });
-      (_server.schema as AppSchema).create('user', {
+      schema.create('user', {
         email: 'eve.holt@test.test',
         first_name: 'Eve',
         last_name: 'Holt',
         avatar: 'https://eu.ui-avatars.com/api/?name=Eve+Holt',
       });
-      (_server.schema as AppSchema).create('user', {
+      schema.create('user', {
         email: 'charles.morris@test.test',
         first_name: 'Charles',
         last_name: 'Morris',
         avatar: 'https://eu.ui-avatars.com/api/?name=Charles+Morris',
       });
-      (_server.schema as AppSchema).create('user', {
+      schema.create('user', {
         email: 'tracey.ramos@test.test',
         first_name: 'Tracey',
         last_name: 'Ramos',
