@@ -1,11 +1,103 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable camelcase */
 /* eslint-disable no-constant-condition */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 
 import axios from 'axios';
+import { createServer, Model, Registry } from 'miragejs';
+// eslint-disable-next-line import/no-unresolved
+import { ModelDefinition } from 'miragejs/-types';
+// eslint-disable-next-line import/no-unresolved
+import Schema from 'miragejs/orm/schema';
 
 import { tryCatch } from '../lib/try-catch';
+
+type User = {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  avatar: string;
+};
+
+const UserModel: ModelDefinition<User> = Model.extend({});
+
+type AppRegistry = Registry<
+  { user: typeof UserModel },
+  {
+    /* factories can be defined here */
+  }
+>;
+type AppSchema = Schema<AppRegistry>;
+
+let server: any;
+
+beforeEach(() => {
+  server = createServer({
+    models: {
+      user: UserModel,
+    },
+    routes() {
+      this.namespace = 'api';
+
+      this.get('/users', (schema: AppSchema) => ({
+        data: schema.all('user'),
+      }));
+
+      this.get('/users/:id', async (schema: AppSchema, request) => ({
+        data: schema.find('user', request.params.id),
+      }));
+
+      this.post('/users', (schema: AppSchema, request) => ({
+        data: schema.create('user', {
+          ...JSON.parse(request.requestBody),
+        }),
+      }));
+    },
+    seeds(_server) {
+      (_server.schema as AppSchema).create('user', {
+        email: 'george.bluth@test.test',
+        first_name: 'George',
+        last_name: 'Bluth',
+        avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
+      });
+      (_server.schema as AppSchema).create('user', {
+        email: 'janet.weaver@test.test',
+        first_name: 'Janet',
+        last_name: 'Weaver',
+        avatar: 'https://eu.ui-avatars.com/api/?name=Janet+Weaver',
+      });
+      (_server.schema as AppSchema).create('user', {
+        email: 'emma.wong@test.test',
+        first_name: 'Emma',
+        last_name: 'Wong',
+        avatar: 'https://eu.ui-avatars.com/api/?name=Emma+Wong',
+      });
+      (_server.schema as AppSchema).create('user', {
+        email: 'eve.holt@test.test',
+        first_name: 'Eve',
+        last_name: 'Holt',
+        avatar: 'https://eu.ui-avatars.com/api/?name=Eve+Holt',
+      });
+      (_server.schema as AppSchema).create('user', {
+        email: 'charles.morris@test.test',
+        first_name: 'Charles',
+        last_name: 'Morris',
+        avatar: 'https://eu.ui-avatars.com/api/?name=Charles+Morris',
+      });
+      (_server.schema as AppSchema).create('user', {
+        email: 'tracey.ramos@test.test',
+        first_name: 'Tracey',
+        last_name: 'Ramos',
+        avatar: 'https://eu.ui-avatars.com/api/?name=Tracey+Ramos',
+      });
+    },
+  });
+});
+
+afterEach(() => {
+  server.shutdown();
+});
 
 describe('Function', () => {
   it('should return the value', async () => {
@@ -80,7 +172,8 @@ describe('Promise', () => {
   });
 
   it('should return the passed argument value', async () => {
-    const fnReturningPromise = (x: string): Promise<string> => new Promise((resolve) => resolve(x));
+    const fnReturningPromise = (x: string): Promise<string> =>
+      new Promise((resolve) => resolve(x));
 
     const [error, result] = await tryCatch(fnReturningPromise, 'success');
 
@@ -89,7 +182,8 @@ describe('Promise', () => {
   });
 
   it('should return the passed arguments multiplied', async () => {
-    const fnReturningPromise = (x: number, y: number): Promise<number> => new Promise((resolve) => resolve(x * y));
+    const fnReturningPromise = (x: number, y: number): Promise<number> =>
+      new Promise((resolve) => resolve(x * y));
 
     const [error, result] = await tryCatch(fnReturningPromise, 7, 7);
 
@@ -115,7 +209,7 @@ describe('Promise', () => {
   });
 
   it('should throw an error', async () => {
-    const promise = new Promise<any>((resolve) => {
+    const promise = new Promise<string>((resolve) => {
       if (Math.random() < 2) {
         throw new Error('An error was thrown');
       }
@@ -147,24 +241,36 @@ describe('Promise', () => {
       }
     });
 
-    it('should return user from get request', async () => {
-      const promise = axios.get('https://reqres.in/api/users/1');
+    it('should return all users from get request', async () => {
+      const promise = axios.get<{
+        data: { modelName: 'user'; models: User[] };
+      }>('/api/users');
 
       const [error, result] = await tryCatch(promise);
 
       expect(error).toBeNull();
-      expect(result).toMatchObject({
+      expect(result?.data.data.models).toHaveLength(6);
+    });
+
+    it('should return user from get request', async () => {
+      const promise = axios.get<User>('/api/users/1');
+
+      const [error, result] = await tryCatch(promise);
+
+      expect(error).toBeNull();
+      expect(result?.data).toMatchObject({
         data: {
-          data: {
-            first_name: 'George',
-            last_name: 'Bluth',
-          },
+          id: '1',
+          first_name: 'George',
+          last_name: 'Bluth',
+          email: 'george.bluth@test.test',
+          avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
         },
       });
     });
 
     it('should return newly created user from post request', async () => {
-      const promise = axios.post('https://reqres.in/api/users', {
+      const promise = axios.post<User>('/api/users', {
         first_name: 'Foo',
         last_name: 'Bar',
       });
@@ -172,8 +278,9 @@ describe('Promise', () => {
       const [error, result] = await tryCatch(promise);
 
       expect(error).toBeNull();
-      expect(result).toMatchObject({
+      expect(result?.data).toMatchObject({
         data: {
+          id: '7',
           first_name: 'Foo',
           last_name: 'Bar',
         },
@@ -190,7 +297,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'true' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -201,7 +308,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'7' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -212,7 +319,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'[object Object]' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -223,7 +330,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'foo bar' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -234,7 +341,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'Symbol(foo)' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -245,7 +352,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'undefined' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 
@@ -256,7 +363,7 @@ describe('Invalid Types', () => {
     expect(result).toBeUndefined();
 
     if (error) {
-      expect(error.message).toEqual("'null' is not a function or promise");
+      expect(error.message).toEqual('Subject is not a function or promise');
     }
   });
 });
