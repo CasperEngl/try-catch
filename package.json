@@ -1,6 +1,6 @@
 {
   "name": "@casperengl/try-catch",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "type": "module",
   "main": "lib/try-catch.cjs.js",
   "browser": "lib/try-catch.umd.js",
