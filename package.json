@@ -1,9 +1,17 @@
 {
   "name": "@casperengl/try-catch",
   "version": "1.8.0",
-  "main": "lib/try-catch.js",
+  "main": "lib/try-catch.cjs.js",
   "browser": "lib/try-catch.umd.js",
   "module": "lib/try-catch.es.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    "require": "./lib/try-catch.cjs.js",
+    "import": "./lib/try-catch.es.js",
+    "default": "./lib/try-catch.es.js",
+    "node": "./lib/try-catch.cjs.js",
+    "browser": "./lib/try-catch.umd.js"
+  },
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -61,5 +69,15 @@
   "bugs": {
     "url": "https://github.com/CasperEngl/try-catch/issues"
   },
-  "homepage": "https://github.com/CasperEngl/try-catch#readme"
+  "homepage": "https://github.com/CasperEngl/try-catch#readme",
+  "keywords": [
+    "trycatch",
+    "try catch",
+    "react",
+    "util",
+    "utility",
+    "promise",
+    "function",
+    "callback"
+  ]
 }
