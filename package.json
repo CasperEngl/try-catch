@@ -23,8 +23,8 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": "./lib/try-catch.esm.js",
-      "require": "./lib/try-catch.cjs.js"
+      "import": "./lib/try-catch.esm.production.js",
+      "require": "./lib/try-catch.cjs.production.js"
     }
   },
   "scripts": {
