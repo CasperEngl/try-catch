@@ -10,7 +10,7 @@ import { ModelDefinition } from 'miragejs/-types';
 // eslint-disable-next-line import/no-unresolved
 import Schema from 'miragejs/orm/schema';
 
-import { tryCatch } from '../lib/try-catch.umd';
+import { tryCatch } from '../lib/try-catch.umd.production';
 
 type User = {
   id: number;
@@ -93,6 +93,8 @@ beforeEach(() => {
       });
     },
   });
+
+  server.logging = false;
 });
 
 afterEach(() => {
