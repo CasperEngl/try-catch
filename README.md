@@ -3,9 +3,6 @@
   <a href="https://www.npmjs.com/package/@casperengl/try-catch" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/@casperengl/try-catch.svg">
   </a>
-  <a href="https://github.com/casperengl/try-catch/actions" target="_blank">
-    <img alt="GitHub Action" src="https://github.com/casperengl/try-catch/workflows/Main/badge.svg">
-  </a>
   <a href="https://github.com/CasperEngl/try-catch#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -57,7 +54,9 @@ Notice `type="module"` is required to use import statements in the browser.
   // import tryCatch from 'https://cdn.skypack.dev/@casperengl/try-catch';
 
   const apiCall = async () => {
-    const promise = fetch('https://reqres.in/api/users/1').then((response) => response.json());
+    const promise = fetch('https://reqres.in/api/users/1').then((response) =>
+      response.json()
+    );
     const [error, result] = await tryCatch(promise);
 
     console.log(error, result); // null, {data: {…}, support: {…}}
