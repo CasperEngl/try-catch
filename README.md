@@ -7,10 +7,10 @@
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="https://github.com/CasperEngl/try-catch/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+    <img alt="Maintenance" src="https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg" />
   </a>
   <a href="https://github.com/CasperEngl/try-catch/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/casperengl/try-catch" />
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-mit-brightgreen.svg" />
   </a>
   <a href="https://twitter.com/casperengl" target="_blank">
     <img alt="Twitter: casperengl" src="https://img.shields.io/twitter/follow/casperengl.svg?style=social" />
