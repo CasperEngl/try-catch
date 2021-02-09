@@ -140,6 +140,34 @@ describe('Function', () => {
     });
   });
 
+  it('should accept any amount of extra arguments', async () => {
+    const fn = (...args: string[]): string => args.join(',');
+
+    const [error, result] = await tryCatch(
+      fn,
+      'foobar',
+      'foo',
+      'bar',
+      'baz',
+      'qux',
+      'quux',
+      'quuz',
+      'corge',
+      'grault',
+      'garply',
+      'waldo',
+      'fred',
+      'plugh',
+      'xyzzy',
+      'thud'
+    );
+
+    expect(error).toBeNull();
+    expect(result).toEqual(
+      'foobar,foo,bar,baz,qux,quux,quuz,corge,grault,garply,waldo,fred,plugh,xyzzy,thud'
+    );
+  });
+
   it('should throw an error', async () => {
     const fn = (): string => {
       if (Math.random() < 2) {
@@ -206,6 +234,35 @@ describe('Promise', () => {
     expect(result).toEqual({
       status: 'success',
     });
+  });
+
+  it('should accept any amount of extra arguments', async () => {
+    const promise = (...args: string[]): Promise<string> =>
+      new Promise((resolve) => resolve(args.join(',')));
+
+    const [error, result] = await tryCatch(
+      promise,
+      'foobar',
+      'foo',
+      'bar',
+      'baz',
+      'qux',
+      'quux',
+      'quuz',
+      'corge',
+      'grault',
+      'garply',
+      'waldo',
+      'fred',
+      'plugh',
+      'xyzzy',
+      'thud'
+    );
+
+    expect(error).toBeNull();
+    expect(result).toEqual(
+      'foobar,foo,bar,baz,qux,quux,quuz,corge,grault,garply,waldo,fred,plugh,xyzzy,thud'
+    );
   });
 
   it('should throw an error', async () => {

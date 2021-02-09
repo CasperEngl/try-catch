@@ -19,13 +19,16 @@ type TryCatchReturnType<ReturnType> =
   | [null, ReturnType];
 
 export function tryCatch<ReturnType>(
-  subject: Promise<ReturnType>
+  subject: Promise<ReturnType>,
+  ...args: any[]
 ): Promise<TryCatchReturnType<ReturnType>>;
 export function tryCatch<ReturnType>(
-  subject: (..._args: any[]) => ReturnType
+  subject: (..._args: any[]) => ReturnType,
+  ...args: any[]
 ): Promise<TryCatchReturnType<ReturnType>>;
 export function tryCatch<ReturnType>(
-  subject: (..._args: Promise<any>[]) => Promise<ReturnType>
+  subject: (..._args: Promise<any>[]) => Promise<ReturnType>,
+  ...args: any[]
 ): Promise<TryCatchReturnType<ReturnType>>;
 export async function tryCatch<ReturnType>(
   subject:
