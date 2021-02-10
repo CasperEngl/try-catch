@@ -5,15 +5,15 @@
   "description": "Functional library to try-catch code that accepts functions and promises",
   "author": "Casper Engelmann <me@casperengelmann.com>",
   "type": "module",
-  "main": "./lib/index.js",
-  "module": "./lib/index.esm.js",
-  "jsnext:main": "./lib/index.esm.js",
+  "main": "./lib/try-catch.js",
+  "module": "./lib/try-catch.esm.js",
+  "jsnext:main": "./lib/try-catch.esm.js",
   "umd:main": "./lib/try-catch.umd.production.js",
   "unpkg": "./lib/try-catch.umd.production.js",
   "jsdelivr": "./lib/try-catch.umd.production.js",
   "browser": "./lib/try-catch.umd.production.js",
-  "source": "./src/index.ts",
-  "types": "./lib/index.d.ts",
+  "source": "./src/try-catch.ts",
+  "types": "./lib/try-catch.d.ts",
   "files": [
     "lib"
   ],
@@ -31,8 +31,8 @@
     "coverage": "jest --coverage --coverageReporters=text-lcov",
     "test": "cross-env NODE_ENV=testing jest",
     "watch:test": "npm run test --watch",
-    "prebuild": "tsc -d",
-    "build": "rollup -c rollup.config.js",
+    "prebuild": "tsc -d --emitDeclarationOnly",
+    "build": "rollup -c ./scripts/rollup.config.js",
     "prepublishOnly": "npm test"
   },
   "publishConfig": {
@@ -46,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/CasperEngl/try-catch/issues"
   },
-  "homepage": "https://refined-github-html-preview.kidonng.workers.dev/CasperEngl/try-catch/raw/master/example/index.html",
+  "homepage": "https://refined-github-html-preview.kidonng.workers.dev/CasperEngl/try-catch/raw/master/example/try-catch.html",
   "keywords": [
     "trycatch",
     "try catch",
@@ -64,7 +64,11 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-typescript": "^8.1.0",
     "@size-limit/preset-small-lib": "^4.9.1",
+    "@testing-library/react-hooks": "^5.0.3",
     "@types/jest": "^26.0.10",
+    "@types/node": "^14.14.25",
+    "@types/react": "^17.0.1",
+    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "axios": "^0.21.1",
@@ -77,6 +81,8 @@
     "jest": "^26.4.2",
     "lodash": "^4.17.20",
     "miragejs": "^0.1.41",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "rollup": "^2.38.5",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-copy": "^3.3.0",
@@ -86,5 +92,6 @@
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3"
-  }
+  },
+  "peerDependencies": {}
 }
