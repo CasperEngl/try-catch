@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to @casperengl/try-catch 👋</h1>
+<h1 align="center">Try Catch</h1>
 <p>
   <a href="https://www.npmjs.com/package/@casperengl/try-catch" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/@casperengl/try-catch.svg">
@@ -17,7 +17,7 @@
   </a>
 </p>
 
-> Package to trycatch code that accepts functions and promises
+> Functional library to try-catch code that accepts functions and promises
 
 ### 🏠 [Homepage](https://github.com/CasperEngl/try-catch#readme)
 
