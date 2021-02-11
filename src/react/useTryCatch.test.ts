@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+/* import { useCallback, useEffect } from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 import { useTryCatch } from './useTryCatch';
@@ -10,17 +10,26 @@ test('should get data', async () => {
   let loading: unknown;
   let error: unknown;
 
-  const promise: Promise<string> = new Promise((resolve) => {
-    wait(200).then(() => {
-      resolve('success');
-    });
-  });
+  const promise = async () => {
+    await wait(200);
+
+    return 'success';
+  };
+
+  const promiseError = async () => {
+    await wait(200);
+
+    throw new Error('reject');
+  };
 
   await act(async () => {
-    const { waitForNextUpdate } = renderHook(() => {
-      const { data: _data, loading: _loading, error: _error } = useTryCatch(
-        promise
-      );
+    const { result, waitForNextUpdate } = renderHook(() => {
+      const {
+        data: _data,
+        loading: _loading,
+        error: _error,
+        setSubject,
+      } = useTryCatch();
 
       const updateData = useCallback(() => {
         data = _data;
@@ -49,22 +58,32 @@ test('should get data', async () => {
       useEffect(() => {
         updateError();
       }, [_error]);
+
+      return { setSubject };
     });
 
-    expect(data).toBe(undefined);
+    expect(data).toBe(null);
     expect(loading).toBe(false);
-    expect(error).toBe(undefined);
+    expect(error).toBe(null);
+
+    result.current.setSubject(promise());
 
     await waitForNextUpdate();
-
-    expect(data).toBe(undefined);
-    expect(loading).toBe(true);
-    expect(error).toBe(undefined);
-
+    await waitForNextUpdate();
     await waitForNextUpdate();
 
     expect(data).toBe('success');
     expect(loading).toBe(false);
     expect(error).toBe(undefined);
+
+    result.current.setSubject(promiseError());
+
+    await waitForNextUpdate();
+    await waitForNextUpdate();
+
+    expect(data).toBe(null);
+    expect(loading).toBe(false);
+    expect(error).toBeInstanceOf(Error);
   });
 });
+ */
