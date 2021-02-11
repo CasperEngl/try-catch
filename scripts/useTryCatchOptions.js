@@ -6,25 +6,15 @@ const globals = {
   'react-dom': 'ReactDOM',
 };
 
-const option = {
-  name,
-  exports: 'named',
-  file: './lib/react/index.js',
-  fileDt,
-  format: 'es',
-  sourcemap: true,
-  globals,
-  external: ['react', 'react-dom', '../try-catch'],
-};
-
 export const useTryCatchOptions = [
   {
-    env: 'production',
+    name,
+    exports: 'named',
+    file: './lib/react/index.js',
+    fileDt,
+    format: 'es',
+    sourcemap: true,
+    globals,
+    external: ['react', 'react-dom', '../try-catch'],
   },
-  {
-    env: 'development',
-  },
-].map((o) => ({
-  ...option,
-  ...o,
-}));
+];

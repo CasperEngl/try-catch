@@ -14,22 +14,18 @@ export const tryCatchOptions = [
   {
     file: pkg.module,
     format: 'es',
-    env: 'production',
   },
   {
     file: pkg.module,
     format: 'es',
-    env: 'development',
   },
   {
     file: pkg.main,
     format: 'cjs',
-    env: 'production',
   },
   {
     file: pkg.main,
     format: 'cjs',
-    env: 'development',
   },
   {
     file: pkg.browser,

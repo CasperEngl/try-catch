@@ -35,7 +35,7 @@ export const createRollupConfig = (input, option) => {
         comments: 'none',
       }),
       sourcemaps(),
-      option.env === 'production' && terser(),
+      option.format === 'umd' && terser(),
       option.fileDt &&
         copy({
           targets: [
