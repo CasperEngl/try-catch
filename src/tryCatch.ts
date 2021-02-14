@@ -16,8 +16,7 @@ export class TryCatchError extends Error implements TryCatchError {
 
 export type TryCatchReturnType<ReturnType> =
   | [TryCatchError, undefined]
-  | [null, ReturnType]
-  | [undefined, undefined];
+  | [null, ReturnType];
 
 interface SubjectTypeInterface<ReturnType> {
   promise: Promise<ReturnType>;
@@ -46,29 +45,25 @@ export async function tryCatch<ReturnType>(
   subject?: SubjectType<ReturnType>,
   ...args: any[]
 ): Promise<TryCatchReturnType<ReturnType>> {
-  if (subject) {
-    if (typeof subject === 'function') {
-      const fn = subject as typeof subject;
+  if (typeof subject === 'function') {
+    const fn = subject as typeof subject;
 
-      try {
-        return [null, await fn(...args)];
-      } catch (error) {
-        return [new TryCatchError(error), undefined];
-      }
+    try {
+      return [null, await fn(...args)];
+    } catch (error) {
+      return [new TryCatchError(error), undefined];
     }
-
-    if (Promise.resolve(subject) === subject) {
-      try {
-        return [null, await subject];
-      } catch (error) {
-        return [new TryCatchError(error), undefined];
-      }
-    }
-
-    return [new TypeError(`Subject is not a function or promise`), undefined];
   }
 
-  return [undefined, undefined];
+  if (Promise.resolve(subject) === subject) {
+    try {
+      return [null, await subject];
+    } catch (error) {
+      return [new TryCatchError(error), undefined];
+    }
+  }
+
+  return [new TypeError(`Subject is not a function or promise`), undefined];
 }
 
 export default tryCatch;
