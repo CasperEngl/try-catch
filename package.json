@@ -1,7 +1,7 @@
 {
   "name": "@casperengl/try-catch",
   "license": "MIT",
-  "version": "1.10.0-1",
+  "version": "1.10.0-2",
   "description": "Functional library to try-catch code that accepts functions and promises",
   "author": "Casper Engelmann <me@casperengelmann.com>",
   "main": "./lib/try-catch.js",
