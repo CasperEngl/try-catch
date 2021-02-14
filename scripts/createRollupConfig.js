@@ -18,10 +18,24 @@ import { omit } from 'lodash';
  * }} option
  */
 export const createRollupConfig = (input, option) => {
-  const dest = option.file.slice(0, option.file.lastIndexOf('/'));
-  const fileDt = option.env
-    ? `${option.file.replace('.js', '')}.${option.env}.d.ts`
-    : option.file;
+  const fileDt = `${option.file.replace('.js', '')}.d.ts`;
+  const dest = option.file.slice(0, option.file.lastIndexOf('/')) || '.';
+  const rename = fileDt.replace(dest, '');
+  const targets = [];
+
+  if (dest + rename !== option.fileDt) {
+    targets.push({
+      src: option.fileDt,
+      dest,
+      rename,
+    });
+  }
+
+  console.log({
+    src: option.fileDt,
+    dest: dest || '.',
+    rename: fileDt.replace(dest, ''),
+  });
 
   return {
     ...(option.external ? { external: option.external } : null),
@@ -39,13 +53,7 @@ export const createRollupConfig = (input, option) => {
       option.format === 'umd' && terser(),
       option.fileDt &&
         copy({
-          targets: [
-            {
-              src: option.fileDt,
-              dest: dest || '.',
-              rename: fileDt.replace(dest, ''),
-            },
-          ],
+          targets,
         }),
     ],
   };

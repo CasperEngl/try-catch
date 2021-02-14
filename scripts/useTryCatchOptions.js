@@ -1,5 +1,5 @@
 const name = 'useTryCatch';
-const fileDt = './lib/react/index.d.ts';
+const fileDt = './lib/react/useTryCatch.d.ts';
 
 const globals = {
   react: 'React',
