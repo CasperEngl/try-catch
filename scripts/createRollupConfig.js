@@ -31,12 +31,6 @@ export const createRollupConfig = (input, option) => {
     });
   }
 
-  console.log({
-    src: option.fileDt,
-    dest: dest || '.',
-    rename: fileDt.replace(dest, ''),
-  });
-
   return {
     ...(option.external ? { external: option.external } : null),
     input,
