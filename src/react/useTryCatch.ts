@@ -1,28 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { tryCatch } from '../try-catch';
+import { tryCatch } from '../tryCatch';
 
 export function useTryCatch<ReturnType>(
-  subject?:
-    | Promise<ReturnType>
-    | ((..._args: any[]) => ReturnType)
-    | ((..._args: Promise<any>[]) => Promise<ReturnType>),
+  subject?: Promise<ReturnType> | undefined,
   ...args: any[]
 ): {
   data?: ReturnType | null;
   loading: boolean;
   error?: Error | null;
-  refetch(): Promise<void>;
-  setSubject: React.Dispatch<
-    React.SetStateAction<ReturnType | Promise<ReturnType> | undefined>
-  >;
+  mutate: React.Dispatch<React.SetStateAction<Promise<ReturnType> | undefined>>;
 } {
-  const [_subject, setSubject] = useState(
-    typeof subject === 'function' ? subject(...args) : subject
-  );
-  const [data, setData] = useState<ReturnType>();
+  const [_subject, mutate] = useState(subject);
+  const [data, setData] = useState<ReturnType | null>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error>();
+  const [error, setError] = useState<Error | null>();
   const componentIsMounted = useRef(true);
 
   useEffect(
@@ -32,35 +24,32 @@ export function useTryCatch<ReturnType>(
     []
   );
 
-  const refetch = useCallback(async () => {
-    if (_subject) {
-      setLoading(true);
+  const refetch = async () => {
+    setLoading(true);
 
-      const [_error, _result] = await tryCatch<ReturnType>(
-        typeof _subject === 'function' ? _subject(...args) : _subject
-      );
+    const [_error, _result] = await tryCatch<ReturnType>(_subject, args);
 
-      if (componentIsMounted.current) {
-        if (_error) {
-          setError(_error);
-        } else {
-          setData(_result);
-        }
-
-        setLoading(false);
+    if (componentIsMounted.current) {
+      if (_error) {
+        setData(null);
+        setError(_error);
+      } else {
+        setData(_result);
+        setError(null);
       }
     }
-  }, [_subject]);
+
+    setLoading(false);
+  };
 
   useEffect(() => {
     refetch();
   }, [_subject]);
 
   return {
-    data: error ?? loading ? data : null,
+    data: loading && error ? null : data,
     loading,
-    error: data ?? loading ? error : null,
-    refetch,
-    setSubject,
+    error: loading && data ? null : error,
+    mutate,
   };
 }

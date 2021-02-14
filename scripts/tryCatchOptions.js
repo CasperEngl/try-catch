@@ -1,7 +1,7 @@
 import pkg from '../package.json';
 
 const name = 'tryCatch';
-const fileDt = './lib/try-catch.d.ts';
+const fileDt = './lib/tryCatch.d.ts';
 
 const option = {
   name,
@@ -16,20 +16,12 @@ export const tryCatchOptions = [
     format: 'es',
   },
   {
-    file: pkg.module,
-    format: 'es',
-  },
-  {
-    file: pkg.main,
-    format: 'cjs',
-  },
-  {
-    file: pkg.main,
-    format: 'cjs',
-  },
-  {
     file: pkg.browser,
     format: 'umd',
+  },
+  {
+    file: pkg.main,
+    format: 'cjs',
   },
 ].map((o) => ({
   ...option,

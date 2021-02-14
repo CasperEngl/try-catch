@@ -2,102 +2,18 @@
 /* eslint-disable no-constant-condition */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
+import { setupServer, User } from './setup';
 
-import axios from 'axios';
-import { createServer, Model, Registry } from 'miragejs';
-// eslint-disable-next-line import/no-unresolved
-import { ModelDefinition } from 'miragejs/-types';
-// eslint-disable-next-line import/no-unresolved
-import Schema from 'miragejs/orm/schema';
+import { fetchJSON } from './fetch';
+import { tryCatch } from '../../lib/try-catch';
 
-import { tryCatch } from '../lib/try-catch';
+let server: ReturnType<typeof setupServer>;
 
-type User = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
-const UserModel: ModelDefinition<User> = Model.extend({});
-
-type AppRegistry = Registry<
-  { user: typeof UserModel },
-  {
-    /* factories can be defined here */
-  }
->;
-type AppSchema = Schema<AppRegistry>;
-
-let server: any;
-
-beforeEach(() => {
-  server = createServer({
-    models: {
-      user: UserModel,
-    },
-    routes() {
-      this.namespace = 'api';
-
-      this.get('/users', (schema: AppSchema) => ({
-        data: schema.all('user'),
-      }));
-
-      this.get('/users/:id', async (schema: AppSchema, request) => ({
-        data: schema.find('user', request.params.id),
-      }));
-
-      this.post('/users', (schema: AppSchema, request) => ({
-        data: schema.create('user', {
-          ...JSON.parse(request.requestBody),
-        }),
-      }));
-    },
-    seeds({ schema }: { schema: AppSchema }) {
-      schema.create('user', {
-        email: 'george.bluth@test.test',
-        first_name: 'George',
-        last_name: 'Bluth',
-        avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
-      });
-      schema.create('user', {
-        email: 'janet.weaver@test.test',
-        first_name: 'Janet',
-        last_name: 'Weaver',
-        avatar: 'https://eu.ui-avatars.com/api/?name=Janet+Weaver',
-      });
-      schema.create('user', {
-        email: 'emma.wong@test.test',
-        first_name: 'Emma',
-        last_name: 'Wong',
-        avatar: 'https://eu.ui-avatars.com/api/?name=Emma+Wong',
-      });
-      schema.create('user', {
-        email: 'eve.holt@test.test',
-        first_name: 'Eve',
-        last_name: 'Holt',
-        avatar: 'https://eu.ui-avatars.com/api/?name=Eve+Holt',
-      });
-      schema.create('user', {
-        email: 'charles.morris@test.test',
-        first_name: 'Charles',
-        last_name: 'Morris',
-        avatar: 'https://eu.ui-avatars.com/api/?name=Charles+Morris',
-      });
-      schema.create('user', {
-        email: 'tracey.ramos@test.test',
-        first_name: 'Tracey',
-        last_name: 'Ramos',
-        avatar: 'https://eu.ui-avatars.com/api/?name=Tracey+Ramos',
-      });
-    },
-  });
-
-  server.logging = false;
+beforeAll(() => {
+  server = setupServer();
 });
 
-afterEach(() => {
+afterAll(() => {
   server.shutdown();
 });
 
@@ -301,49 +217,57 @@ describe('Promise', () => {
     });
 
     it('should return all users from get request', async () => {
-      const promise = axios.get<{
+      const promise = fetchJSON<{
         data: { modelName: 'user'; models: User[] };
       }>('/api/users');
 
       const [error, result] = await tryCatch(promise);
 
       expect(error).toBeNull();
-      expect(result?.data.data.models).toHaveLength(6);
+      expect(result?.data.models).toHaveLength(6);
     });
 
     it('should return user from get request', async () => {
-      const promise = axios.get<User>('/api/users/1');
+      const promise = fetchJSON<User>('/api/users/1');
 
       const [error, result] = await tryCatch(promise);
 
       expect(error).toBeNull();
-      expect(result?.data).toMatchObject({
-        data: {
-          id: '1',
-          first_name: 'George',
-          last_name: 'Bluth',
-          email: 'george.bluth@test.test',
-          avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
-        },
+      expect(result).toMatchObject({
+        id: '1',
+        firstName: 'George',
+        lastName: 'Bluth',
+        email: 'george.bluth@test.test',
+        avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
       });
     });
 
     it('should return newly created user from post request', async () => {
-      const promise = axios.post<User>('/api/users', {
-        first_name: 'Foo',
-        last_name: 'Bar',
+      const promise = fetchJSON<User>('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+          firstName: 'Foo',
+          lastName: 'Bar',
+        }),
       });
 
       const [error, result] = await tryCatch(promise);
 
       expect(error).toBeNull();
-      expect(result?.data).toMatchObject({
-        data: {
-          id: '7',
-          first_name: 'Foo',
-          last_name: 'Bar',
-        },
+      expect(result).toMatchObject({
+        id: '7',
+        firstName: 'Foo',
+        lastName: 'Bar',
       });
+    });
+
+    it('should error out', async () => {
+      const promise = fetchJSON('/api/error');
+
+      const [error, result] = await tryCatch(promise);
+
+      expect(error).toBeInstanceOf(Error);
+      expect(result).toBeUndefined();
     });
   });
 });

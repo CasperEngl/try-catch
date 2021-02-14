@@ -1,5 +1,5 @@
 {
-  "exclude": ["src/**/*.test.ts", "lib/**/*"],
+  "exclude": ["src/**/*.test.ts", "src/test", "lib/**/*"],
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */

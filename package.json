@@ -4,14 +4,13 @@
   "version": "1.10.0-1",
   "description": "Functional library to try-catch code that accepts functions and promises",
   "author": "Casper Engelmann <me@casperengelmann.com>",
-  "type": "module",
   "main": "./lib/try-catch.js",
-  "module": "./lib/try-catch.esm.js",
-  "jsnext:main": "./lib/try-catch.esm.js",
-  "umd:main": "./lib/try-catch.umd.js",
-  "unpkg": "./lib/try-catch.umd.js",
-  "jsdelivr": "./lib/try-catch.umd.js",
-  "browser": "./lib/try-catch.umd.js",
+  "module": "./lib/esm/try-catch.js",
+  "jsnext:main": "./lib/esm/try-catch.js",
+  "umd:main": "./lib/umd/try-catch.js",
+  "unpkg": "./lib/umd/try-catch.js",
+  "jsdelivr": "./lib/umd/try-catch.js",
+  "browser": "./lib/umd/try-catch.js",
   "source": "./src/try-catch.ts",
   "types": "./lib/try-catch.d.ts",
   "files": [
@@ -23,8 +22,8 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": "./lib/try-catch.esm.production.js",
-      "require": "./lib/try-catch.cjs.production.js"
+      "import": "./lib/esm/try-catch.js",
+      "require": "./lib/try-catch.js"
     }
   },
   "scripts": {
@@ -33,7 +32,10 @@
     "watch:test": "npm run test --watch",
     "prebuild": "tsc -d --emitDeclarationOnly",
     "build": "rollup -c ./scripts/rollup.config.js",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm test",
+    "dev": "next dev",
+    "next:build": "next build",
+    "start": "next start"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -94,5 +96,7 @@
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3"
   },
-  "peerDependencies": {}
+  "peerDependencies": {
+    "swr": "^0.4.2"
+  }
 }

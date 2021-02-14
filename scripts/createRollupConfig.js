@@ -18,6 +18,7 @@ import { omit } from 'lodash';
  * }} option
  */
 export const createRollupConfig = (input, option) => {
+  const dest = option.file.slice(0, option.file.lastIndexOf('/'));
   const fileDt = option.env
     ? `${option.file.replace('.js', '')}.${option.env}.d.ts`
     : option.file;
@@ -41,8 +42,8 @@ export const createRollupConfig = (input, option) => {
           targets: [
             {
               src: option.fileDt,
-              dest: '.',
-              rename: fileDt,
+              dest: dest || '.',
+              rename: fileDt.replace(dest, ''),
             },
           ],
         }),

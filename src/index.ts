@@ -1,4 +1,4 @@
-import { tryCatch, TryCatchError } from './try-catch';
+import { tryCatch, TryCatchError } from './tryCatch';
 
 declare global {
   interface Window {
