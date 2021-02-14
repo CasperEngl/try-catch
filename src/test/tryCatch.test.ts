@@ -234,11 +234,13 @@ describe('Promise', () => {
 
       expect(error).toBeNull();
       expect(result).toMatchObject({
-        id: '1',
-        firstName: 'George',
-        lastName: 'Bluth',
-        email: 'george.bluth@test.test',
-        avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
+        data: {
+          id: '1',
+          firstName: 'George',
+          lastName: 'Bluth',
+          email: 'george.bluth@test.test',
+          avatar: 'https://eu.ui-avatars.com/api/?name=George+Bluth',
+        },
       });
     });
 
@@ -255,9 +257,11 @@ describe('Promise', () => {
 
       expect(error).toBeNull();
       expect(result).toMatchObject({
-        id: '7',
-        firstName: 'Foo',
-        lastName: 'Bar',
+        data: {
+          id: '7',
+          firstName: 'Foo',
+          lastName: 'Bar',
+        },
       });
     });
 
